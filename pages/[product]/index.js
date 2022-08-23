@@ -58,8 +58,8 @@ export default function Product ({ data, query }) {
   const favoriteEvent = () => {
     user
       ? isFavorite
-          ? removeEvent(id)
-          : addEvent(id)
+        ? removeEvent(id)
+        : addEvent(id)
       : typeof window !== 'undefined' && router.push('/login')
   }
 
