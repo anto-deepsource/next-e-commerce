@@ -17,13 +17,13 @@ function useProvideAuth () {
   const getCurrentUser = () => {
     auth.currentUser?.uid
       ? db
-        .collection('Users')
-        .doc(auth.currentUser.uid)
-        .get()
-        .then((doc) => {
-          setUser(doc.data())
-          setLoading(false)
-        })
+          .collection('Users')
+          .doc(auth.currentUser.uid)
+          .get()
+          .then((doc) => {
+            setUser(doc.data())
+            setLoading(false)
+          })
       : setLoading(false)
   }
 
