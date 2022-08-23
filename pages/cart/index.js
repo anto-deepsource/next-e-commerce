@@ -19,15 +19,15 @@ export default function CartPage () {
   const cartItems =
     cartLength > 0
       ? Object.keys(data)
-          .map((item) => {
-            return data[item].map((size) => {
-              return {
-                name: item,
-                size
-              }
-            })
+        .map((item) => {
+          return data[item].map((size) => {
+            return {
+              name: item,
+              size
+            }
           })
-          .flat(1)
+        })
+        .flat(1)
       : []
 
   const sizeCount = cartItems.reduce(
