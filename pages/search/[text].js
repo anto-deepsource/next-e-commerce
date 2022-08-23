@@ -1,26 +1,26 @@
-import React from "react";
-import { db } from "@/config/firebase";
+import React from 'react'
+import { db } from '@/config/firebase'
 
-import Head from "next/head";
+import Head from 'next/head'
 
-import styles from "./search.module.scss";
+import styles from './search.module.scss'
 
-import Layout from "components/Layout";
-import Button from "@/components/FilterButton";
-import ProductCard from "@/components/ProductCard/product-card";
-import { useAuth } from "@/firebase/context";
+import Layout from 'components/Layout'
+import Button from '@/components/FilterButton'
+import ProductCard from '@/components/ProductCard/product-card'
+import { useAuth } from '@/firebase/context'
 
-export default function SearchPage({ data, query }) {
-  const { user, loading } = useAuth();
+export default function SearchPage ({ data, query }) {
+  const { user, loading } = useAuth()
 
-  console.log(data, query);
+  console.log(data, query)
 
   return (
     <Layout>
       <div className={styles.container}>
         <Head>
           <title>Create Next App</title>
-          <link rel="icon" href="/favicon.ico" />
+          <link rel='icon' href='/favicon.ico' />
         </Head>
 
         <main className={styles.main}>
@@ -29,7 +29,7 @@ export default function SearchPage({ data, query }) {
               Listing {data.length} products for "{query.text}"
             </h1>
             <div className={styles.headerButtons}>
-              <Button type="sort" style={{ marginRight: 20 }} />
+              <Button type='sort' style={{ marginRight: 20 }} />
               <Button count={0} />
             </div>
           </div>
@@ -47,33 +47,33 @@ export default function SearchPage({ data, query }) {
                     sale_price={product.sale_price}
                     favorite={user?.favorites?.includes(product.id)}
                   />
-                );
+                )
               })}
           </div>
         </main>
       </div>
     </Layout>
-  );
+  )
 }
 
 SearchPage.getInitialProps = async function ({ query }) {
-  let data = {};
-  let error = {};
+  let data = {}
+  let error = {}
   await db
-    .collection("Products")
+    .collection('Products')
     .get()
     .then(function (querySnapshot) {
       data = querySnapshot.docs
         .filter((item) => item.data().product_name.includes(query.text))
         .map(function (doc) {
-          return { id: doc.id, ...doc.data() };
-        });
+          return { id: doc.id, ...doc.data() }
+        })
     })
-    .catch((e) => (error = e));
+    .catch((e) => (error = e))
 
   return {
     data,
     error,
-    query,
-  };
-};
+    query
+  }
+}
