@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react'
 
-import styles from "./horizontal.module.scss";
+import styles from './horizontal.module.scss'
 
-export default function HorizontalCard({
+export default function HorizontalCard ({
   bgColor,
   title,
   desc,
@@ -13,7 +13,7 @@ export default function HorizontalCard({
     return (
       <div
         className={styles.horizontalCard}
-        style={{ backgroundColor: bgColor || "" }}
+        style={{ backgroundColor: bgColor || '' }}
       >
         <div
           className={styles.textContainer}
@@ -23,13 +23,13 @@ export default function HorizontalCard({
         </div>
         <img className={styles.bgImage} src={image} />
       </div>
-    );
+    )
   }
 
   return (
     <div
       className={styles.horizontalCard}
-      style={{ backgroundColor: bgColor || "" }}
+      style={{ backgroundColor: bgColor || '' }}
     >
       <div className={styles.textContainer}>
         <h3>{title}</h3>
@@ -41,5 +41,5 @@ export default function HorizontalCard({
         </div>
       )}
     </div>
-  );
+  )
 }

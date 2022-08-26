@@ -1,61 +1,61 @@
-import { db } from "@/config/firebase";
-import { useState, useEffect } from "react";
+import { db } from '@/config/firebase'
+import { useState, useEffect } from 'react'
 
 const useProduct = (id) => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [data, setData] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
-    async function fetchFromFirestore() {
-      db.collection("Products")
+    async function fetchFromFirestore () {
+      db.collection('Products')
         .doc(id)
         .get()
         .then(function (doc) {
-          setData(doc.data());
-          setLoading(false);
+          setData(doc.data())
+          setLoading(false)
         })
-        .catch((e) => setError(e));
+        .catch((e) => setError(e))
     }
 
-    fetchFromFirestore();
-  }, [id]);
+    fetchFromFirestore()
+  }, [id])
 
   return {
     data,
     loading,
-    error,
-  };
-};
+    error
+  }
+}
 
 const useCategoryProducts = (category) => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [data, setData] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
-    async function fetchFromFirestore() {
-      db.collection("Products")
-        .where("category", "==", category)
+    async function fetchFromFirestore () {
+      db.collection('Products')
+        .where('category', '==', category)
         .get()
         .then(function (querySnapshot) {
           const products = querySnapshot.docs.map(function (doc) {
-            return { id: doc.id, ...doc.data() };
-          });
-          setData(products);
-          setLoading(false);
+            return { id: doc.id, ...doc.data() }
+          })
+          setData(products)
+          setLoading(false)
         })
-        .catch((e) => setError(e));
+        .catch((e) => setError(e))
     }
 
-    fetchFromFirestore();
-  }, [category]);
+    fetchFromFirestore()
+  }, [category])
 
   return {
     data,
     loading,
-    error,
-  };
-};
+    error
+  }
+}
 
-export { useProduct, useCategoryProducts };
+export { useProduct, useCategoryProducts }
