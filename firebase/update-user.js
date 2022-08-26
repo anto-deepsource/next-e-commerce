@@ -1,49 +1,49 @@
-import { firebase, auth, db } from "../config/firebase";
+import { firebase, auth, db } from '../config/firebase'
 
-function updateUser({ email, name, surname, phoneNumber, photo, finalEvent }) {
-  const currentUser = auth.currentUser.uid;
+function updateUser ({ email, name, surname, phoneNumber, photo, finalEvent }) {
+  const currentUser = auth.currentUser.uid
 
   if (photo) {
     return firebase
       .storage()
-      .ref("images/" + currentUser + (photo?.name || "0"))
+      .ref('images/' + currentUser + (photo?.name || '0'))
       .put(photo)
       .then((doc) => {
         doc.ref.getDownloadURL().then((url) => {
-          db.collection("Users")
+          db.collection('Users')
             .doc(currentUser)
             .update({
               name,
               surname,
               email,
-              phoneNumber: phoneNumber || "",
-              photoUrl: url,
+              phoneNumber: phoneNumber || '',
+              photoUrl: url
             })
             .catch((e) => console.log(e))
-            .finally(() => finalEvent());
-        });
+            .finally(() => finalEvent())
+        })
       })
-      .catch((e) => console.log(e));
+      .catch((e) => console.log(e))
   }
 
   return db
-    .collection("Users")
+    .collection('Users')
     .doc(currentUser)
     .update({
       name,
       surname,
       email,
-      phoneNumber: phoneNumber || "",
-    });
+      phoneNumber: phoneNumber || ''
+    })
 }
 
-function updatePassword({ currentPassword, newPassword }) {
-  const currentUser = auth.currentUser;
+function updatePassword ({ currentPassword, newPassword }) {
+  const currentUser = auth.currentUser
 
   const credential = firebase.auth.EmailAuthProvider.credential(
     firebase.auth().currentUser.email,
     currentPassword
-  );
+  )
 
   const update = () => {
     return currentUser
@@ -53,17 +53,17 @@ function updatePassword({ currentPassword, newPassword }) {
       })
       .catch(function (error) {
         // An error happened.
-      });
-  };
+      })
+  }
 
   const reauth = () => {
-    return currentUser.reauthenticateWithCredential(credential);
-  };
+    return currentUser.reauthenticateWithCredential(credential)
+  }
 
   return {
     reauth,
-    update,
-  };
+    update
+  }
 }
 
-export { updateUser, updatePassword };
+export { updateUser, updatePassword }
